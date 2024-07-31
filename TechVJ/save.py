@@ -95,9 +95,6 @@ async def save(client: Client, message: Message):
             # private
             if "https://t.me/c/" in message.text:
                 user_data = database.find_one({'chat_id': message.chat.id})
-                if user_data['session'] is None:
-                    await client.send_message(message.chat.id, strings['need_login'])
-                    return
                 acc = Client("saverestricted", session_string=user_data['session'], api_hash=API_HASH, api_id=API_ID)
                 await acc.connect()
                 chatid = int("-100" + datas[4])
@@ -106,9 +103,6 @@ async def save(client: Client, message: Message):
             # bot
             elif "https://t.me/b/" in message.text:
                 user_data = database.find_one({"chat_id": message.chat.id})
-                if user_data['session'] is None:
-                    await client.send_message(message.chat.id, strings['need_login'])
-                    return
                 acc = Client("saverestricted", session_string=user_data['session'], api_hash=API_HASH, api_id=API_ID)
                 await acc.connect()
                 username = datas[4]
@@ -131,9 +125,6 @@ async def save(client: Client, message: Message):
                 except:
                     try:    
                         user_data = database.find_one({"chat_id": message.chat.id})
-                        if user_data['session'] is None:
-                            await client.send_message(message.chat.id, strings['need_login'])
-                            return
                         acc = Client("saverestricted", session_string=user_data['session'], api_hash=API_HASH, api_id=API_ID)
                         await acc.connect()
                         await handle_private(client, acc, message, username, msgid)
